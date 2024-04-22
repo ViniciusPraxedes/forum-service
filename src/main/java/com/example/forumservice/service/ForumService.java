@@ -70,6 +70,9 @@ public class ForumService {
     }
 
     public void subtractLikeFromPost(String postId){
+        if (postRepository.getReferenceById(postId).getLikeCount() == 0){
+            throw new RuntimeException("like count is zero");
+        }
         postRepository.getReferenceById(postId).setLikeCount(postRepository.getReferenceById(postId).getLikeCount()-1);
         postRepository.save(postRepository.getReferenceById(postId));
     }
@@ -86,6 +89,9 @@ public class ForumService {
     }
     public List<Post> getAllPostsByTopic(String topic){
         return postRepository.getAllByTopic(topic);
+    }
+    public Integer getLikeCount(String postId){
+        return postRepository.findById(postId).get().getLikeCount();
     }
 
 

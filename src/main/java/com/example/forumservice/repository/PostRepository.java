@@ -16,4 +16,5 @@ public interface PostRepository extends JpaRepository<Post,String> {
     Optional<Post> findById(String id);
 
     List<Post> getAllByTopic(String topic);
+
 }

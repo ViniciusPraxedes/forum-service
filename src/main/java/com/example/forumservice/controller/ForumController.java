@@ -36,7 +36,7 @@ public class ForumController {
     }
     @PostMapping("/dislike/{postId}")
     public void subtractLikeFromPost(@PathVariable String postId){
-        forumService.addLikeToPost(postId);
+        forumService.subtractLikeFromPost(postId);
     }
 
     @GetMapping("/post/topic/")
@@ -55,4 +55,9 @@ public class ForumController {
     public List<Post> getAllPostsByTopic (@PathVariable String topic){
         return forumService.getAllPostsByTopic(topic);
     }
+    @GetMapping("/post/likeCount/{postId}")
+    public Integer getLikeCount (@PathVariable String postId){
+        return forumService.getLikeCount(postId);
+    }
+
 }
