@@ -24,7 +24,9 @@ public class Post {
     private String profilePicture;
     private String username;
     private LocalDate datePosted;
+    @Column(name = "title", length = 5048)
     private String title;
+    @Column(name = "content", length = 5048)
     private String content;
     private Integer likeCount;
     private Integer commentCount;

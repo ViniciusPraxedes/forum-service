@@ -39,6 +39,9 @@ public class ForumService {
                 .topic(request.getTopic())
                 .build();
 
+        System.out.println("here");
+
+
         postRepository.save(post);
 
         return post;

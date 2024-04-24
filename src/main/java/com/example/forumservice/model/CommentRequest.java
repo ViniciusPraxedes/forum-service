@@ -17,7 +17,6 @@ import java.util.Date;
 @NoArgsConstructor
 public class CommentRequest {
     @NotEmpty
-    @Size(max = 255)
     private String content;
     @NotEmpty
     private String postId;

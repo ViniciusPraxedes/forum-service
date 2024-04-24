@@ -24,11 +24,11 @@ public class PostRequest {
     private String username;
 
     @NotNull
-    @Size(min = 1, max = 100) // Example size constraint, adjust as needed
+    @Size(min = 1, max = 2048) // Example size constraint, adjust as needed
     private String title;
 
     @NotNull
-    @Size(min = 1, max = 1000) // Example size constraint, adjust as needed
+    @Size(min = 1, max = 2048) // Example size constraint, adjust as needed
     private String content;
     @NotNull
     private String topic;

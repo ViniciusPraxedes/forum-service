@@ -20,6 +20,7 @@ public class Comment {
     private String profilePicture;
     private String username;
     private LocalDate datePosted;
+    @Column(length = 5048)
     private String content;
     private String post;
 }
