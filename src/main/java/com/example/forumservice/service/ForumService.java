@@ -24,11 +24,13 @@ public class ForumService {
     }
 
 
+
     public Post createPost(PostRequest request){
 
         Post post = Post.builder()
                 .id(UUID.randomUUID().toString())
-                .profilePicture("https://static.vecteezy.com/system/resources/previews/005/544/718/non_2x/profile-icon-design-free-vector.jpg")
+                .profilePicture(request.getProfilePic())
+                .userId(request.getUserId())
                 .username(request.getUsername())
                 .datePosted(LocalDate.now())
                 .title(request.getTitle())
@@ -52,7 +54,7 @@ public class ForumService {
 
         Comment comment = Comment.builder()
                 .id(id)
-                .profilePicture("https://static.vecteezy.com/system/resources/previews/005/544/718/non_2x/profile-icon-design-free-vector.jpg")
+                .profilePicture(request.getProfilePic())
                 .username(request.getUsername())
                 .datePosted(LocalDate.now())
                 .content(request.getContent())
@@ -82,6 +84,10 @@ public class ForumService {
 
     public List<Post> getAllPosts(){
         return postRepository.findAll();
+    }
+
+    public List<Post> getMostPopular(){
+        return postRepository.getAllByLikeCountDesc();
     }
     public Post getPost(String postId){
         return postRepository.findById(postId).get();

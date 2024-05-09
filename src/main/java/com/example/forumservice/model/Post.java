@@ -22,6 +22,7 @@ public class Post {
     @Id
     private String id;
     private String profilePicture;
+    private String userId;
     private String username;
     private LocalDate datePosted;
     @Column(name = "title", length = 5048)

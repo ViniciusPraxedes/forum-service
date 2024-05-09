@@ -33,4 +33,7 @@ public class PostRequest {
     @NotNull
     private String topic;
 
+    private String userId;
+    private String profilePic;
+
 }

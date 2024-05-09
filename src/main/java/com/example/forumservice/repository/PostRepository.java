@@ -17,4 +17,7 @@ public interface PostRepository extends JpaRepository<Post,String> {
 
     List<Post> getAllByTopic(String topic);
 
+    @Query("SELECT p FROM Post p ORDER BY p.likeCount DESC")
+    List<Post> getAllByLikeCountDesc();
+
 }

@@ -51,6 +51,10 @@ public class ForumController {
     public List<Comment> getAllCommentsInThePost(@PathVariable String postId){
         return forumService.getAllCommentsInPost(postId);
     }
+    @GetMapping("/post/popular")
+    public List<Post> getMostPopular(){
+        return forumService.getMostPopular();
+    }
     @GetMapping("/post/topic/{topic}")
     public List<Post> getAllPostsByTopic (@PathVariable String topic){
         return forumService.getAllPostsByTopic(topic);
