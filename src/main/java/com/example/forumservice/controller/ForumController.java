@@ -1,9 +1,6 @@
 package com.example.forumservice.controller;
 
-import com.example.forumservice.model.Comment;
-import com.example.forumservice.model.CommentRequest;
-import com.example.forumservice.model.Post;
-import com.example.forumservice.model.PostRequest;
+import com.example.forumservice.model.*;
 import com.example.forumservice.service.ForumService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,14 +27,47 @@ public class ForumController {
     public void addCommentToPost(@Valid @RequestBody CommentRequest request){
         forumService.addCommentToPost(request);
     }
-    @PostMapping("/like/{postId}")
-    public void addLikeToPost(@PathVariable String postId){
-        forumService.addLikeToPost(postId);
+
+    @GetMapping("/isLiked/{postId}/{userId}")
+    public boolean isLiked(@PathVariable String postId, @PathVariable String userId){
+        return forumService.didTheUserLikeThisPost(postId,userId);
     }
-    @PostMapping("/dislike/{postId}")
-    public void subtractLikeFromPost(@PathVariable String postId){
-        forumService.subtractLikeFromPost(postId);
+
+    @PostMapping("/like/{postId}/{userId}")
+    public void addLikeToPost(@PathVariable String postId, @PathVariable String userId){
+        forumService.addLikeToPost(postId, userId);
     }
+    @PostMapping("/unlike/{postId}/{userId}")
+    public void subtractLikeFromPost(@PathVariable String postId, @PathVariable String userId){
+        forumService.subtractLikeFromPost(postId, userId);
+    }
+
+    @GetMapping("/post/likeCount/{postId}")
+    public Integer getLikeCount (@PathVariable String postId){
+        return forumService.getLikeCount(postId);
+    }
+
+
+
+
+
+
+
+
+
+
+
+    @PutMapping("/updateProfilePicture")
+    public void changeProfilePic(@RequestBody ChangePictureDTO request){
+        forumService.updateProfilePic(request);
+    }
+
+
+
+
+
+
+
 
     @GetMapping("/post/topic/")
     public List<Post> getAllPosts(){
@@ -58,10 +88,6 @@ public class ForumController {
     @GetMapping("/post/topic/{topic}")
     public List<Post> getAllPostsByTopic (@PathVariable String topic){
         return forumService.getAllPostsByTopic(topic);
-    }
-    @GetMapping("/post/likeCount/{postId}")
-    public Integer getLikeCount (@PathVariable String postId){
-        return forumService.getLikeCount(postId);
     }
 
 }

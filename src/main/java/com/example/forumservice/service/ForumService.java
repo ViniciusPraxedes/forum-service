@@ -41,9 +41,6 @@ public class ForumService {
                 .topic(request.getTopic())
                 .build();
 
-        System.out.println("here");
-
-
         postRepository.save(post);
 
         return post;
@@ -59,6 +56,7 @@ public class ForumService {
                 .datePosted(LocalDate.now())
                 .content(request.getContent())
                 .post(request.getPostId())
+                .userId(request.getUserId())
                 .build();
 
 
@@ -69,18 +67,70 @@ public class ForumService {
         commentRepository.save(comment);
     }
 
-    public void addLikeToPost(String postId){
-        postRepository.getReferenceById(postId).setLikeCount(postRepository.getReferenceById(postId).getLikeCount()+1);
-        postRepository.save(postRepository.getReferenceById(postId));
+    public void updateProfilePic(ChangePictureDTO request){
+        postRepository.updateProfilePictureByUserId(request.getUserId(), request.getProfilePicture());
+        commentRepository.updateProfilePictureByUserId(request.getUserId(), request.getProfilePicture());
     }
 
-    public void subtractLikeFromPost(String postId){
-        if (postRepository.getReferenceById(postId).getLikeCount() == 0){
-            throw new RuntimeException("like count is zero");
+
+    public boolean didTheUserLikeThisPost(String postId, String userId){
+
+        for (int i = 0; i < postRepository.findById(postId).get().getUsersThatLikedThisPost().size(); i++){
+            if (postRepository.findById(postId).get().getUsersThatLikedThisPost().get(i).equals(userId)){
+                return true;
+            }
         }
+
+        return false;
+    }
+
+    public void addLikeToPost(String postId, String userId){
+
+        for (int i = 0; i < postRepository.findById(postId).get().getUsersThatLikedThisPost().size(); i++){
+            if (postRepository.findById(postId).get().getUsersThatLikedThisPost().get(i).equals(userId)){
+                throw new RuntimeException("User has already liked this post");
+            }
+        }
+
+        postRepository.getReferenceById(postId).getUsersThatLikedThisPost().add(userId);
+        postRepository.getReferenceById(postId).setLikeCount(postRepository.getReferenceById(postId).getLikeCount()+1);
+        postRepository.save(postRepository.getReferenceById(postId));
+
+    }
+    public void subtractLikeFromPost(String postId, String userId){
+        System.out.println("here");
+
+        if (postRepository.getReferenceById(postId).getUsersThatLikedThisPost().isEmpty()){
+            System.out.println("no one has liked");
+            throw new RuntimeException("No one has liked the post");
+        }
+
+        for (int i = 0; i < postRepository.findById(postId).get().getUsersThatLikedThisPost().size(); i++){
+            System.out.println("here2");
+
+            //The problem is here
+            if (!postRepository.getReferenceById(postId).getUsersThatLikedThisPost().contains(userId)){
+                System.out.println("User not liked");
+                throw new RuntimeException("User has not liked this post");
+            }
+        }
+        System.out.println("here3");
+
+        postRepository.getReferenceById(postId).getUsersThatLikedThisPost().remove(userId);
         postRepository.getReferenceById(postId).setLikeCount(postRepository.getReferenceById(postId).getLikeCount()-1);
         postRepository.save(postRepository.getReferenceById(postId));
     }
+
+    public Integer getLikeCount(String postId){
+        return postRepository.findById(postId).get().getUsersThatLikedThisPost().size();
+    }
+
+
+
+
+
+
+
 
     public List<Post> getAllPosts(){
         return postRepository.findAll();
@@ -98,9 +148,6 @@ public class ForumService {
     }
     public List<Post> getAllPostsByTopic(String topic){
         return postRepository.getAllByTopic(topic);
-    }
-    public Integer getLikeCount(String postId){
-        return postRepository.findById(postId).get().getLikeCount();
     }
 
 

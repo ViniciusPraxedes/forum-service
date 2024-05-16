@@ -34,5 +34,10 @@ public class Post {
     private String topic;
     @OneToMany
     private List<Comment> comments;
+    @ElementCollection
+    @CollectionTable(name = "post_likes", joinColumns = @JoinColumn(name = "post_id"))
+    @Column(name = "user_id")
+    private List<String> usersThatLikedThisPost;
+
 
 }

@@ -17,6 +17,7 @@ import java.util.Date;
 public class Comment {
     @Id
     private String id;
+    private String userId;
     private String profilePicture;
     private String username;
     private LocalDate datePosted;

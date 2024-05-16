@@ -22,5 +22,6 @@ public class CommentRequest {
     private String postId;
     @NotEmpty
     private String username;
+    private String userId;
     private String profilePic;
 }
