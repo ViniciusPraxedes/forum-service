@@ -44,5 +44,5 @@ Check out the live demo: [welcometosweden.onrender.com](https://welcometosweden.
 1. **Clone the repository**
 
    ```bash
-   git clone https://github.com/ViniciusPraxedes/forumService.git
-   cd forumService
+   git clone https://github.com/ViniciusPraxedes/forum-service.git
+   cd forum-service
